@@ -66,19 +66,17 @@ namespace kandi
         }*/
 
         //eteen
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void eteenButtonClick(object sender, RoutedEventArgs e)
         {
-            _brick.DirectCommand.TurnMotorAtPowerForTimeAsync(OutputPort.B | OutputPort.C, _forward, _time, false);
+            var task = new Task(() => myLogiikka.eteen());
+            task.Start();
+            //_brick.DirectCommand.TurnMotorAtPowerForTimeAsync(OutputPort.B | OutputPort.C, _forward, _time, false);
         }
 
-        //taakse
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            _brick.DirectCommand.TurnMotorAtPowerForTimeAsync(OutputPort.B | OutputPort.C, _backward, _time, false);
-        }
+
 
         //kalibroi valkoinen
-        private async void Button_Click_2(object sender, RoutedEventArgs e)
+        private void karibroiValkoinenClick(object sender, RoutedEventArgs e)
         {
             var task = new Task(() => myLogiikka.calWhite());
             task.Start();
@@ -87,7 +85,7 @@ namespace kandi
         }
 
         //kalibroi musta
-        private void Button_Click_3(object sender, RoutedEventArgs e)
+        private void kalibroiMustaClick(object sender, RoutedEventArgs e)
         {
             var task = new Task(() => myLogiikka.calBlack());
             task.Start();
@@ -193,38 +191,48 @@ namespace kandi
             {
                 realtime.Text = value.ToString();
             }
+            if (key == "numberError")
+            {
+
+            }
+            if (key == "saato")
+            {
+                saatoBox.Text = value.ToString();
+            }
 
         }
 
         //aloita PID
-        private async void Button_Click_4(object sender, RoutedEventArgs e)
+        private void startButtonClick(object sender, RoutedEventArgs e)
         {
             try
             {
                 jatka = true;
-                int midpoint = (Int32.Parse(_maxwhite) + Int32.Parse(_maxblack)) / 2;
+                //int midpoint = (Int32.Parse(_maxwhite) + Int32.Parse(_maxblack)) / 2;
                 double kp = Convert.ToDouble(kpBox.Text);
                 double ki = Convert.ToDouble(kiBox.Text);
                 double kd = Convert.ToDouble(kdBox.Text);
+                double nopeus = Convert.ToDouble(nopeusBox.Text);
+                int _nopeus = (int)nopeus;
 
-                var task = new Task(() => myLogiikka.loop(midpoint, kp, ki, kd));
+                var task = new Task(() => myLogiikka.loop(kp, ki, kd, _nopeus));
                 task.Start();
                 //await Task.Run(() => myLogiikka.loop(midpoint, kp, ki, kd));
             }
             catch (Exception ec)
             {
                 // Error
-                //updateUI();
+                update(0, "numberError");
             }
             
 
             
 
-            await _brick.DirectCommand.StopMotorAsync(OutputPort.B | OutputPort.C, false);
+            //await _brick.DirectCommand.StopMotorAsync(OutputPort.B | OutputPort.C, false);
 
         }
 
-        private void lopeta(object sender, RoutedEventArgs e)
+        private void lopetaButtonClick(object sender, RoutedEventArgs e)
         {
             var task = new Task(() => myLogiikka.stop());
             task.Start();
@@ -234,6 +242,18 @@ namespace kandi
         private void connectBTButton_Click(object sender, RoutedEventArgs e)
         {
             var task = new Task(() => myLogiikka.connect());
+            task.Start();
+        }
+
+        private void vasenButton_Click(object sender, RoutedEventArgs e)
+        {
+            var task = new Task(() => myLogiikka.vasen());
+            task.Start();
+        }
+
+        private void oikeaButton_Click(object sender, RoutedEventArgs e)
+        {
+            var task = new Task(() => myLogiikka.oikea());
             task.Start();
         }
     }

@@ -7,23 +7,27 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525" Loaded="Window_Loaded">
     <Grid>
-        <Button x:Name="eteenButton" Content="eteen" HorizontalAlignment="Left" Margin="33,30,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
-        <Button x:Name="taakseButton" Content="taakse" HorizontalAlignment="Left" Margin="182,30,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_1"/>
-        <Button x:Name="kalibroiButton" Content="kalibroi val" HorizontalAlignment="Left" Margin="33,209,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_2"/>
-        <Button Content="aloita&#xD;&#xA;" HorizontalAlignment="Left" Margin="318,289,0,0" VerticalAlignment="Top" Width="75" Height="20" Click="Button_Click_4"/>
+        <Button x:Name="eteenButton" Content="Eteen" HorizontalAlignment="Left" Margin="113,30,0,0" VerticalAlignment="Top" Width="75" Click="eteenButtonClick"/>
+        <Button x:Name="kalibroiValkoinenButton" Content="Kalibroi valkoinen" HorizontalAlignment="Left" Margin="33,209,0,0" VerticalAlignment="Top" Width="120" Click="karibroiValkoinenClick"/>
+        <Button x:Name="startButton" Content="Aloita" HorizontalAlignment="Left" Margin="318,289,0,0" VerticalAlignment="Top" Width="75" Height="20" Click="startButtonClick"/>
         <TextBox x:Name="maxWhite" HorizontalAlignment="Left" Height="23" Margin="33,234,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="maxBlack" HorizontalAlignment="Left" Height="23" Margin="182,234,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Button Content="kalibroi mus" HorizontalAlignment="Left" Margin="182,209,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click_3"/>
-        <Button Content="lopeta" HorizontalAlignment="Left" Margin="416,289,0,0" VerticalAlignment="Top" Width="75" Click="lopeta"/>
+        <Button x:Name="kalibroiMustaButton" Content="Kalibroi musta" HorizontalAlignment="Left" Margin="182,209,0,0" VerticalAlignment="Top" Width="120" Click="kalibroiMustaClick" Height="20"/>
+        <Button x:Name="lopetaButton" Content="Lopeta" HorizontalAlignment="Left" Margin="416,289,0,0" VerticalAlignment="Top" Width="75" Click="lopetaButtonClick"/>
         <TextBox x:Name="realtime" HorizontalAlignment="Left" Height="23" Margin="33,262,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="saatoBox" HorizontalAlignment="Left" Height="23" Margin="182,262,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="kdBox" HorizontalAlignment="Left" Height="23" Margin="318,123,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="kiBox" HorizontalAlignment="Left" Height="23" Margin="318,95,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <TextBox x:Name="kpBox" HorizontalAlignment="Left" Height="23" Margin="318,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="kdBox" HorizontalAlignment="Left" Height="23" Margin="318,123,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
+        <TextBox x:Name="kiBox" HorizontalAlignment="Left" Height="23" Margin="318,95,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="0"/>
+        <TextBox x:Name="kpBox" HorizontalAlignment="Left" Height="23" Margin="318,67,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="3"/>
         <Label Content="P" HorizontalAlignment="Left" Margin="284,67,0,0" VerticalAlignment="Top" Height="23" Width="18"/>
         <Label Content="I" HorizontalAlignment="Left" Margin="284,95,0,0" VerticalAlignment="Top" Height="23" Width="18"/>
         <Label Content="D" HorizontalAlignment="Left" Margin="284,123,0,0" VerticalAlignment="Top" Height="23"/>
-        <Button x:Name="connectBTButton" Content="Connect Bluetooth" HorizontalAlignment="Left" Margin="318,30,0,0" VerticalAlignment="Top" Width="109" Click="connectBTButton_Click"/>
+        <Button x:Name="connectBTButton" Content="Yhdistä Bluetooth" HorizontalAlignment="Left" Margin="318,30,0,0" VerticalAlignment="Top" Width="109" Click="connectBTButton_Click"/>
+        <Label x:Name="errorLabel" Content="Errors" HorizontalAlignment="Left" Margin="33,100,0,0" VerticalAlignment="Top" Height="69" Width="213"/>
+        <Button x:Name="vasenButton" Content="Vasen" HorizontalAlignment="Left" Margin="33,30,0,0" VerticalAlignment="Top" Width="75" Click="vasenButton_Click"/>
+        <Button x:Name="oikeaButton" Content="Oikea" HorizontalAlignment="Left" Margin="193,30,0,0" VerticalAlignment="Top" Width="75" Click="oikeaButton_Click"/>
+        <Label Content="Nopeus" HorizontalAlignment="Left" Margin="251,151,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="nopeusBox" HorizontalAlignment="Left" Height="23" Margin="318,151,0,0" TextWrapping="Wrap" Text="65" VerticalAlignment="Top" Width="120"/>
 
     </Grid>
 </Window>

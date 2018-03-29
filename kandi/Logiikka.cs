@@ -16,7 +16,6 @@ namespace kandi
         private PIDKontrolleri myController;
 
         int _forward = -40;
-        int _backward = 30;
         uint _time = 300;
         string _maxwhite;
         string _maxblack;
@@ -55,81 +54,64 @@ namespace kandi
             notifyObservers(brick.Ports[InputPort.Three].RawValue, "realtime");
         }
 
-        public async void loop(int midpoint, double kp, double ki, double kd)
+        // Vaihdettavissa
+        public async void loop(double kp, double ki, double kd, int nopeus)
         {
+            int midpoint = (Int32.Parse(_maxwhite) + Int32.Parse(_maxblack)) / 2;
+            myController.setParam(kp, ki, kd, nopeus);
+            lasterror = 0;
             double sensor;
-            double error;
+            double error = 0;
             double integral = 0;
-            double derivative;
+            double derivative = 0;
             int i = 0;
+            jatka = true;
             while (jatka)
             {
-                sensor = Int32.Parse(brick.Ports[InputPort.Three].RawValue.ToString());
+
+                //sensor = Int32.Parse(brick.Ports[InputPort.Three].RawValue.ToString());
+                sensor = brick.Ports[InputPort.Three].RawValue;
                 error = midpoint - sensor;
-                integral = error + integral;
+                integral = (0.1 * error) + integral;
+                if (integral > 100) integral = 100;
+                if (integral < -100) integral = -100;
                 derivative = error - lasterror;
                 //kp = 0.07, ki = 0.3, kd = 1
-                saato = (kp * error + ki * integral + kd * derivative); //P SAATIMESSA P = 3 IS OKAY
-                Console.WriteLine(i + ":" + saato + ":" + integral);
+                //saato = (kp * error + ki * integral + kd * derivative); //P SAATIMESSA P = 3 IS OKAY
+                saato = myController.control(midpoint, (int)sensor);
+                //Console.WriteLine(i + ":" + saato + ":" + integral);
                 i++;
                 //this.Dispatcher.Invoke(() => { saatoBox.Text = saato.ToString(); });
-                if (saato > 0)
+                notifyObservers((int)saato, "saato");
+                double saato2 = saato / 2;
+                if (sensor < midpoint)
+                //if (saato > 0)
                 {
-                    //_brick.DirectCommand.TurnMotorAtPowerAsync(OutputPort.B, -(int)saato);
-                    //_brick.DirectCommand.TurnMotorAtPowerAsync(OutputPort.C, -80);
-
-                    /*_brick.BatchCommand.TurnMotorAtPower(OutputPort.B, -(int)saato);
-                    _brick.BatchCommand.TurnMotorAtPower(OutputPort.C, -80);
                     try
                     {
-                        await _brick.BatchCommand.SendCommandAsync();
-                    }
-                    catch
-                    {
-                        jatka = false;
-                    }*/
-
-                    brick.BatchCommand.TurnMotorAtPowerForTime(OutputPort.B, -(75 - (int)saato), 5, false);
-                    brick.BatchCommand.TurnMotorAtPowerForTime(OutputPort.C, -75, 5, false);
-                    try
-                    {
+                        brick.BatchCommand.TurnMotorAtPowerForTime(OutputPort.B, -(nopeus - (int)saato), 10, false);
+                        brick.BatchCommand.TurnMotorAtPowerForTime(OutputPort.C, -(nopeus + (int)saato), 10, false);
                         await brick.BatchCommand.SendCommandAsync();
                     }
                     catch
                     {
                         jatka = false;
                     }
-
-                    System.Threading.Thread.Sleep(5);
-
+                    System.Threading.Thread.Sleep(10);
                 }
                 else
                 {
-                    //_brick.DirectCommand.TurnMotorAtPowerAsync(OutputPort.C, -Math.Abs((int)saato));
-                    //_brick.DirectCommand.TurnMotorAtPowerAsync(OutputPort.B, -80);
-
-                    /*_brick.BatchCommand.TurnMotorAtPower(OutputPort.C, (int)saato);
-                    _brick.BatchCommand.TurnMotorAtPower(OutputPort.B, -80);
                     try
                     {
-                        await _brick.BatchCommand.SendCommandAsync();
-                    }
-                    catch
-                    {
-                        jatka = false;
-                    }*/
-
-                    brick.BatchCommand.TurnMotorAtPowerForTime(OutputPort.C, -75 - (int)saato, 5, false);
-                    brick.BatchCommand.TurnMotorAtPowerForTime(OutputPort.B, -75, 5, false);
-                    try
-                    {
+                        brick.BatchCommand.TurnMotorAtPowerForTime(OutputPort.C, -(nopeus - (int)saato), 10, false);
+                        brick.BatchCommand.TurnMotorAtPowerForTime(OutputPort.B, -(nopeus + (int)saato), 10, false);
                         await brick.BatchCommand.SendCommandAsync();
                     }
                     catch
                     {
                         jatka = false;
                     }
-                    System.Threading.Thread.Sleep(5);
+                    System.Threading.Thread.Sleep(10);
                 }
                 lasterror = error;
             }
@@ -139,6 +121,23 @@ namespace kandi
         {
             jatka = false;
             brick.DirectCommand.StopMotorAsync(OutputPort.B | OutputPort.C, false);
+        }
+
+        public void eteen()
+        {
+            brick.DirectCommand.TurnMotorAtPowerForTimeAsync(OutputPort.B | OutputPort.C, _forward, _time, false);
+        }
+
+        public void vasen()
+        {
+            brick.DirectCommand.TurnMotorAtPowerForTimeAsync(OutputPort.C, _forward + 25, _time, false);
+            brick.DirectCommand.TurnMotorAtPowerForTimeAsync(OutputPort.B, _forward, _time, false);
+        }
+
+        public void oikea()
+        {
+            brick.DirectCommand.TurnMotorAtPowerForTimeAsync(OutputPort.C, _forward, _time, false);
+            brick.DirectCommand.TurnMotorAtPowerForTimeAsync(OutputPort.B, _forward + 25, _time, false);
         }
 
         public void calWhite()
