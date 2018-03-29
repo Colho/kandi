@@ -22,19 +22,12 @@ namespace kandi
         int sign = 0;
         int oldSign = 0;
 
-        /// <summary>
-        /// Luokan oletusrakentaja, ei alusta mitään.
-        /// </summary>
+
         public PIDKontrolleri()
         {
 
         }
 
-        /// <summary>
-        /// Nollaa säätimen ja asettaa uudet P ja I arvot
-        /// </summary>
-        /// <param name="P">Säätimen P-arvo</param>
-        /// <param name="I">Säätimen I-arvo</param>
         public void setParam(double P, double I, double D, int nopeus)
         {
             Kp = P;
@@ -47,12 +40,7 @@ namespace kandi
             maxLimit = 30;
         }
 
-        /// <summary>
-        /// Funnktio joka toteuttaa itse PI-säätimen
-        /// </summary>
-        /// <param name="goal">Tavoite arvo</param>
-        /// <param name="current">Tämänhetkinen arvo</param>
-        /// <returns>säädön määrän</returns>
+
         public double control(int goal, int current)
         {
             diff = goal - current;
