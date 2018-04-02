@@ -35,6 +35,7 @@ namespace kandi
         {
             try
             {
+                //brick = new Brick(new NetworkCommunication(""));
                 brick = new Brick(new BluetoothCommunication("COM3"));
                 brick.BrickChanged += Brick_BrickChanged;
                 await brick.ConnectAsync();
@@ -51,6 +52,8 @@ namespace kandi
         private void Brick_BrickChanged(object sender, BrickChangedEventArgs e)
         {
             //throw new NotImplementedException();
+            //Console.WriteLine(DateTime.Now);
+            Console.WriteLine(DateTime.Now + " + " +  DateTime.Now.Millisecond);
             notifyObservers(brick.Ports[InputPort.Three].RawValue, "realtime");
         }
 
@@ -89,29 +92,29 @@ namespace kandi
                 {
                     try
                     {
-                        brick.BatchCommand.TurnMotorAtPowerForTime(OutputPort.B, -(nopeus - (int)saato), 10, false);
-                        brick.BatchCommand.TurnMotorAtPowerForTime(OutputPort.C, -(nopeus + (int)saato), 10, false);
+                        brick.BatchCommand.TurnMotorAtPowerForTime(OutputPort.B, -(nopeus - (int)saato), 100, false);
+                        brick.BatchCommand.TurnMotorAtPowerForTime(OutputPort.C, -(nopeus + (int)saato), 100, false);
                         await brick.BatchCommand.SendCommandAsync();
                     }
                     catch
                     {
                         jatka = false;
                     }
-                    System.Threading.Thread.Sleep(10);
+                    System.Threading.Thread.Sleep(100);
                 }
                 else
                 {
                     try
                     {
-                        brick.BatchCommand.TurnMotorAtPowerForTime(OutputPort.C, -(nopeus - (int)saato), 10, false);
-                        brick.BatchCommand.TurnMotorAtPowerForTime(OutputPort.B, -(nopeus + (int)saato), 10, false);
+                        brick.BatchCommand.TurnMotorAtPowerForTime(OutputPort.C, -(nopeus - (int)saato), 100, false);
+                        brick.BatchCommand.TurnMotorAtPowerForTime(OutputPort.B, -(nopeus + (int)saato), 100, false);
                         await brick.BatchCommand.SendCommandAsync();
                     }
                     catch
                     {
                         jatka = false;
                     }
-                    System.Threading.Thread.Sleep(10);
+                    System.Threading.Thread.Sleep(100);
                 }
                 lasterror = error;
             }
