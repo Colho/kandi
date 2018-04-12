@@ -54,7 +54,7 @@ namespace kandi
                 diff = -diff;
             }
             derivative = diff - lastDiff;
-            Console.WriteLine("diff: " + diff);
+            //Console.WriteLine("diff: " + diff);
             unlimitedControl = Kp * diff + integrator + Kd * derivative;
             //Console.WriteLine("unlimited: " + unlimitedControl);
 
@@ -72,11 +72,11 @@ namespace kandi
             {
                 actualControl = unlimitedControl;
             }
-            Console.WriteLine("actual: " + actualControl);
+            //Console.WriteLine("actual: " + actualControl);
             integrator = integrator + (Ki / 200) * diff;
             lastDiff = diff;
             if (integrator > 30) integrator = 30;
-            Console.WriteLine("Integrator: " + integrator);
+            //Console.WriteLine("Integrator: " + integrator);
             //Console.WriteLine(DateTime.Now);
 
             return actualControl;
