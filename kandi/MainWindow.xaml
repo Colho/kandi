@@ -22,8 +22,8 @@
         <Label Content="P" HorizontalAlignment="Left" Margin="284,67,0,0" VerticalAlignment="Top" Height="23" Width="18"/>
         <Label Content="I" HorizontalAlignment="Left" Margin="284,95,0,0" VerticalAlignment="Top" Height="23" Width="18"/>
         <Label Content="D" HorizontalAlignment="Left" Margin="284,123,0,0" VerticalAlignment="Top" Height="23"/>
-        <Button x:Name="connectBTButton" Content="Yhdistä Bluetooth" HorizontalAlignment="Left" Margin="318,30,0,0" VerticalAlignment="Top" Width="109" Click="connectBTButton_Click"/>
-        <Label x:Name="errorLabel" Content="Errors" HorizontalAlignment="Left" Margin="33,100,0,0" VerticalAlignment="Top" Height="69" Width="213"/>
+        <Button x:Name="connectBTButton" Content="Yhdistä" HorizontalAlignment="Left" Margin="318,30,0,0" VerticalAlignment="Top" Width="109" Click="connectBTButton_Click"/>
+        <Label x:Name="errorLabel" Content="" HorizontalAlignment="Left" Margin="33,100,0,0" VerticalAlignment="Top" Height="69" Width="213"/>
         <Button x:Name="vasenButton" Content="Vasen" HorizontalAlignment="Left" Margin="33,30,0,0" VerticalAlignment="Top" Width="75" Click="vasenButton_Click"/>
         <Button x:Name="oikeaButton" Content="Oikea" HorizontalAlignment="Left" Margin="193,30,0,0" VerticalAlignment="Top" Width="75" Click="oikeaButton_Click"/>
         <Label Content="Nopeus" HorizontalAlignment="Left" Margin="251,151,0,0" VerticalAlignment="Top"/>

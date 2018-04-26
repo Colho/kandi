@@ -36,8 +36,7 @@ namespace kandi
             integrator = 0;
             unlimitedControl = 0;
             actualControl = 0;
-            //maxLimit = nopeus - 5;
-            maxLimit = 30;
+            maxLimit = nopeus - 5;
         }
 
 
@@ -46,39 +45,32 @@ namespace kandi
             diff = goal - current;
             if (Math.Sign(diff) != sign)
             {
+                // Integraattorin nollaus jos säädön merkki vaihtuu
                 integrator = 0;
                 sign = Math.Sign(diff);
             }
             if (diff < 0)
             {
+                // Tarkistetaan että saadaan vain positiivisia ulostuloja
                 diff = -diff;
             }
             derivative = diff - lastDiff;
-            //Console.WriteLine("diff: " + diff);
             unlimitedControl = Kp * diff + integrator + Kd * derivative;
-            //Console.WriteLine("unlimited: " + unlimitedControl);
-
             if (unlimitedControl < lowLimit)
             {
-                //Console.WriteLine("too low");
                 actualControl = lowLimit;
             }
             else if (unlimitedControl > maxLimit)
             {
-                //Console.WriteLine("too high");
                 actualControl = maxLimit;
             }
             else
             {
                 actualControl = unlimitedControl;
             }
-            //Console.WriteLine("actual: " + actualControl);
             integrator = integrator + (Ki / 200) * diff;
             lastDiff = diff;
             if (integrator > 30) integrator = 30;
-            //Console.WriteLine("Integrator: " + integrator);
-            //Console.WriteLine(DateTime.Now);
-
             return actualControl;
 
         }
